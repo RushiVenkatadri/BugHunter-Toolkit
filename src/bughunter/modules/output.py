@@ -1,4 +1,5 @@
 from rich.console import Console
+from pathlib import Path
 from rich.tree import Tree
 
 console = Console()
@@ -19,11 +20,27 @@ def key_value(key, value):
     console.print(f"[bold cyan]{key:<16}[/bold cyan] {value}")
 
 def workspace_tree(domain):
+
+    root = Path("results") / domain
+
     tree = Tree("[bold cyan]results[/bold cyan]")
+
     target = tree.add(f"[green]{domain}[/green]")
-    target.add("report.md")
-    target.add("logs.txt")
-    target.add("raw/")
+
+    for item in sorted(root.iterdir()):
+
+        if item.is_file():
+
+            target.add(item.name)
+
+        elif item.is_dir():
+
+            directory = target.add(item.name)
+
+            for child in sorted(item.iterdir()):
+
+                directory.add(child.name)
+
     console.print(tree)
 def security_report(findings):
 

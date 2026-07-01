@@ -84,3 +84,31 @@ def fetch_sitemap(domain: str):
             continue
 
     return None
+def fetch_security_txt(domain: str):
+
+    urls = [
+        f"https://{domain}/.well-known/security.txt",
+        f"https://{domain}/security.txt",
+        f"http://{domain}/.well-known/security.txt",
+        f"http://{domain}/security.txt"
+    ]
+
+    for url in urls:
+
+        try:
+
+            response = requests.get(
+                url,
+                timeout=10,
+                headers={
+                    "User-Agent": "BugHunter Toolkit/1.1"
+                }
+            )
+
+            if response.status_code == 200:
+                return response.text
+
+        except Exception:
+            continue
+
+    return None

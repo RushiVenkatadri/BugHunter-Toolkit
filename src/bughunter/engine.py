@@ -7,7 +7,8 @@ from bughunter.modules.output import error
 from bughunter.modules.output import key_value
 from bughunter.modules.output import workspace_tree
 from bughunter.modules.output import security_report
-
+from bughunter.modules.network import fetch_sitemap
+from bughunter.modules.network import fetch_security_txt
 from bughunter.modules.validator import validate_domain
 from bughunter.modules.workspace import create_workspace
 from bughunter.modules.workspace import save_raw_file
@@ -19,7 +20,7 @@ from bughunter.modules.network import fetch_sitemap
 
 from bughunter.modules.security import analyze_headers
 from bughunter.modules.reporter import generate_report
-
+from bughunter.modules.json_report import generate_json_report
 
 def run_scan(domain):
 
@@ -72,10 +73,27 @@ def run_scan(domain):
     else:
         warning("sitemap.xml Not Found")
 
+    security_txt = fetch_security_txt(domain)
+
+    if security_txt:
+           save_raw_file(domain, "security.txt", security_txt)
+           success("security.txt Downloaded")
+    else:
+           warning("security.txt Not Found")
+
+
     generate_report(domain, ip, response)
 
     success("Markdown Report Generated")
 
+    generate_json_report(
+       domain,
+       ip,
+       response,
+       findings
+    )
+
+    success("JSON Report Generated")
     workspace_tree(domain)
 
     success("Recon Finished")

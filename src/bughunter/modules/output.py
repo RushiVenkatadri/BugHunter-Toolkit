@@ -15,6 +15,9 @@ def warning(message):
 def error(message):
     console.print(f"[red][-][/red] {message}")
 
+def key_value(key, value):
+    console.print(f"[bold cyan]{key:<16}[/bold cyan] {value}")
+
 def workspace_tree(domain):
     tree = Tree("[bold cyan]results[/bold cyan]")
     target = tree.add(f"[green]{domain}[/green]")
@@ -22,3 +25,18 @@ def workspace_tree(domain):
     target.add("logs.txt")
     target.add("raw/")
     console.print(tree)
+def security_report(findings):
+
+    console.print("\n[bold magenta]Security Headers[/bold magenta]")
+
+    for item in findings:
+
+        if item["status"] == "Present":
+            console.print(
+                f"[green]✓[/green] {item['description']}"
+            )
+
+        else:
+            console.print(
+                f"[red]✗[/red] {item['description']}"
+            )

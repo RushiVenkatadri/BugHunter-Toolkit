@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bughunter-toolkit"
+version = "1.0.0"
+description = "A modular reconnaissance toolkit for bug bounty hunters."
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [
+    { name = "Rushi Venkatadri" }
+]
+dependencies = [
+    "requests",
+    "rich"
+]
+
+[project.scripts]
+bughunter = "bughunter.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]

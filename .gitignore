@@ -9,3 +9,10 @@ dist/
 results/
 .vscode/
 .DS_Store
+
+results/
+reports/
+
+__pycache__/
+*.pyc
+.venv/

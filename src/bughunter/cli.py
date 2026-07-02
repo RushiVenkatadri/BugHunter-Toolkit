@@ -2,7 +2,7 @@ import argparse
 
 from bughunter.engine import run_scan
 
-VERSION = "1.0.0"
+VERSION = "1.2.0"
 
 
 def main():
@@ -15,7 +15,7 @@ def main():
     parser.add_argument(
         "--version",
         action="version",
-        version="""BugHunter Toolkit v1.0.0
+        version="""BugHunter Toolkit v1.2.0
         Author : Rushi Venkatadri
         GitHub : https://github.com/RushiVenkatadri"""
     )

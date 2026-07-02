@@ -2,10 +2,9 @@ from pathlib import Path
 from datetime import datetime
 
 
-def generate_report(domain, ip, response):
+def generate_report(domain, ip, response, output_dir="results"):
 
-    report = Path("results") / domain / "report.md"
-
+    report = Path(output_dir) / domain / "report.md"
     with open(report, "w", encoding="utf-8") as file:
 
         file.write("# BugHunter Toolkit Report\n\n")

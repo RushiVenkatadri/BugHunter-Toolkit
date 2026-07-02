@@ -21,9 +21,10 @@ from bughunter.modules.network import fetch_sitemap
 from bughunter.modules.security import analyze_headers
 from bughunter.modules.reporter import generate_report
 from bughunter.modules.json_report import generate_json_report
+from bughunter.modules.html_report import generate_html_report
 
-def run_scan(domain):
 
+def run_scan(domain, output_dir="results"):
     show_banner()
 
     info(f"Target: {domain}")
@@ -34,7 +35,7 @@ def run_scan(domain):
 
     success("Domain Valid")
 
-    create_workspace(domain)
+    create_workspace(domain,output_dir)
 
     success("Workspace Created")
 
@@ -60,7 +61,7 @@ def run_scan(domain):
     robots = fetch_robots(domain)
 
     if robots:
-        save_raw_file(domain, "robots.txt", robots)
+        save_raw_file(domain, "robots.txt", robots, output_dir)
         success("robots.txt Downloaded")
     else:
         warning("robots.txt Not Found")
@@ -68,7 +69,7 @@ def run_scan(domain):
     sitemap = fetch_sitemap(domain)
 
     if sitemap:
-        save_raw_file(domain, "sitemap.xml", sitemap)
+        save_raw_file(domain, "sitemap.xml", sitemap, output_dir)
         success("sitemap.xml Downloaded")
     else:
         warning("sitemap.xml Not Found")
@@ -76,13 +77,13 @@ def run_scan(domain):
     security_txt = fetch_security_txt(domain)
 
     if security_txt:
-           save_raw_file(domain, "security.txt", security_txt)
+           save_raw_file(domain, "security.txt", security_txt,output_dir)
            success("security.txt Downloaded")
     else:
            warning("security.txt Not Found")
 
 
-    generate_report(domain, ip, response)
+    generate_report(domain, ip, response,output_dir)
 
     success("Markdown Report Generated")
 
@@ -90,10 +91,24 @@ def run_scan(domain):
        domain,
        ip,
        response,
-       findings
+       findings,
+       output_dir
     )
 
     success("JSON Report Generated")
-    workspace_tree(domain)
+
+    generate_html_report(
+       domain,
+       ip,
+       response,
+       findings,
+       output_dir
+    )
+
+    success("HTML Report Generated")
+
+
+
+    workspace_tree(domain,output_dir)
 
     success("Recon Finished")

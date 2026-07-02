@@ -2,8 +2,7 @@ import json
 from pathlib import Path
 
 
-def generate_json_report(domain, ip, response, findings):
-
+def generate_json_report(domain, ip, response, findings, output_dir="results"):
     data = {
         "target": domain,
         "ip_address": ip,
@@ -13,7 +12,7 @@ def generate_json_report(domain, ip, response, findings):
         "headers": dict(response.headers)
     }
 
-    report = Path("results") / domain / "report.json"
+    report = Path(output_dir) / domain / "report.json"
 
     with open(report, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=4)

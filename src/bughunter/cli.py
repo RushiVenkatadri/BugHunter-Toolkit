@@ -35,9 +35,17 @@ def main():
         help="Target domain (example: nasa.gov)"
     )
 
+    scan.add_argument(
+        "-o",
+        "--output",
+        metavar="DIR",
+        default="results",
+        help="Directory to save scan results (default: results)"
+    )
+
     args = parser.parse_args()
 
     if args.command == "scan":
-        run_scan(args.domain)
+        run_scan(args.domain, args.output)
     else:
         parser.print_help()

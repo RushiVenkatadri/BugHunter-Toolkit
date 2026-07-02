@@ -19,11 +19,11 @@ def error(message):
 def key_value(key, value):
     console.print(f"[bold cyan]{key:<16}[/bold cyan] {value}")
 
-def workspace_tree(domain):
+def workspace_tree(domain, output_dir="results"):
 
-    root = Path("results") / domain
+    root = Path(output_dir) / domain
 
-    tree = Tree("[bold cyan]results[/bold cyan]")
+    tree = Tree(f"[bold cyan]{output_dir}[/bold cyan]")
 
     target = tree.add(f"[green]{domain}[/green]")
 

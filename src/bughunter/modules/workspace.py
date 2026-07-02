@@ -1,7 +1,7 @@
 from pathlib import Path
 
-def create_workspace(domain: str):
-    base = Path("results") / domain
+def create_workspace(domain: str, output_dir: str = "results"):
+    base = Path(output_dir) / domain
     raw = base / "raw"
 
     raw.mkdir(parents=True, exist_ok=True)
@@ -11,12 +11,12 @@ def create_workspace(domain: str):
 
     return base
 
-def save_raw_file(domain: str, filename: str, content: str):
+def save_raw_file(domain: str, filename: str, content: str, output_dir: str = "results"):
 
     if content is None:
         return
 
-    file = Path("results") / domain / "raw" / filename
+    file = Path(output_dir) / domain / "raw" / filename
 
     with open(file, "w", encoding="utf-8") as f:
         f.write(content)

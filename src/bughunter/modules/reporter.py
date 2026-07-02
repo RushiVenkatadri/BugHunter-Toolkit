@@ -2,7 +2,8 @@ from pathlib import Path
 from datetime import datetime
 
 
-def generate_report(domain, ip, response, output_dir="results"):
+def generate_report(domain, ip, response, technologies, output_dir="results"):
+
 
     report = Path(output_dir) / domain / "report.md"
     with open(report, "w", encoding="utf-8") as file:
@@ -35,7 +36,23 @@ def generate_report(domain, ip, response, output_dir="results"):
 
             file.write("\n---\n\n")
 
+            file.write("## Technology Detection\n\n")
+
+            if technologies:
+
+                for tech in technologies:
+                    file.write(f"- {tech}\n")
+
+            else:
+
+                file.write("- No technologies detected\n")
+
+
+
+            file.write("\n---\n\n")
+
             file.write("## Scan Summary\n\n")
+           
 
             file.write("- HTTP connection established successfully.\n")
             file.write("- Response headers collected.\n")

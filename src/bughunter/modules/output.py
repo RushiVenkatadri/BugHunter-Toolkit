@@ -57,3 +57,15 @@ def security_report(findings):
             console.print(
                 f"[red]✗[/red] {item['description']}"
             )
+def technology_report(technologies):
+
+    console.print("\n[bold magenta]Technology Detection[/bold magenta]")
+
+    if not technologies:
+
+        console.print("[yellow]- No technologies detected[/yellow]")
+        return
+
+    for tech in technologies:
+
+        console.print(f"[green]✓[/green] {tech}")

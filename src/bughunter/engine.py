@@ -12,11 +12,13 @@ from bughunter.modules.network import fetch_security_txt
 from bughunter.modules.validator import validate_domain
 from bughunter.modules.workspace import create_workspace
 from bughunter.modules.workspace import save_raw_file
-
+from bughunter.modules.technology import detect_technologies
 from bughunter.modules.network import resolve_ip
 from bughunter.modules.network import fetch_website
 from bughunter.modules.network import fetch_robots
 from bughunter.modules.network import fetch_sitemap
+
+from bughunter.modules.output import technology_report
 
 from bughunter.modules.security import analyze_headers
 from bughunter.modules.reporter import generate_report
@@ -58,6 +60,11 @@ def run_scan(domain, output_dir="results"):
 
     security_report(findings)
 
+    technologies = detect_technologies(response.headers)
+
+    technology_report(technologies)
+
+
     robots = fetch_robots(domain)
 
     if robots:
@@ -83,8 +90,13 @@ def run_scan(domain, output_dir="results"):
            warning("security.txt Not Found")
 
 
-    generate_report(domain, ip, response,output_dir)
-
+    generate_report(
+      domain,
+      ip,
+      response,
+      technologies,
+      output_dir
+    )
     success("Markdown Report Generated")
 
     generate_json_report(
@@ -92,6 +104,7 @@ def run_scan(domain, output_dir="results"):
        ip,
        response,
        findings,
+       technologies,
        output_dir
     )
 
@@ -102,6 +115,7 @@ def run_scan(domain, output_dir="results"):
        ip,
        response,
        findings,
+       technologies,
        output_dir
     )
 
